@@ -13,20 +13,21 @@ import {
   ChevronRight,
   ShieldCheck,
   CheckCircle2,
-  Newspaper,
   Calendar,
   User,
   GraduationCap,
   Building2,
+  ArrowRight,
+  TrendingUp,
 } from 'lucide-react';
 
 export const LandingPage = () => {
   const { scrollY } = useScroll();
-  const heroY = useTransform(scrollY, [0, 500], [0, -60]);
+  const heroParallax = useTransform(scrollY, [0, 600], [0, -40]);
 
-  // Fetch Latest Posts using React Query
+  // Fetch Latest Posts with React Query
   const { data: posts = [], isLoading: loadingPosts } = useQuery({
-    queryKey: ['latestPosts'],
+    queryKey: ['landingLatestPosts'],
     queryFn: async () => {
       const res = await api.get('/posts?limit=3');
       return res.data.data.posts;
@@ -34,273 +35,308 @@ export const LandingPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-white flex flex-col font-sans selection:bg-teal-500 selection:text-white">
       <Navbar />
 
-      {/* HERO SECTION WITH FRAMER-MOTION PARALLAX & ANTI-GRAVITY FLOATING CARDS */}
-      <section className="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden bg-gradient-to-b from-emerald-50/80 via-slate-50 to-slate-50">
-        {/* Ambient Glow Orbs */}
-        <div className="absolute top-10 left-1/4 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl -z-10 animate-pulse-subtle" />
-        <div className="absolute top-40 right-10 w-96 h-96 bg-teal-300/20 rounded-full blur-3xl -z-10" />
+      {/* 1. HERO SECTION WITH SUPER SOFT GRADIENT & ANTI-GRAVITY FLOATING ELEMENTS */}
+      <section className="relative pt-20 pb-24 md:pt-28 md:pb-36 bg-gradient-to-b from-teal-50/50 to-white overflow-hidden">
+        {/* Soft Ambient Blur Orbs */}
+        <div className="absolute top-12 left-1/3 w-[500px] h-[500px] bg-teal-200/20 rounded-full blur-3xl -z-10 pointer-events-none" />
+        <div className="absolute top-36 right-10 w-[400px] h-[400px] bg-emerald-100/30 rounded-full blur-3xl -z-10 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Parallax Left Content */}
-            <motion.div style={{ y: heroY }} className="lg:col-span-7 space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/90 border border-emerald-200 text-emerald-800 text-sm font-semibold shadow-sm">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
-                <span>Portal Resmi SDN 2 Tegalsari Kepanjen</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left Content Column */}
+            <motion.div style={{ y: heroParallax }} className="lg:col-span-7 space-y-8">
+              
+              {/* Badge Accent Kecil */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 border border-teal-200/60 text-teal-700 text-xs font-bold tracking-wide shadow-xs">
+                <Sparkles className="w-4 h-4 text-teal-500" />
+                <span>Solusi Pendidikan Modern</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.15] tracking-tight">
-                Pendidikan Unggul, <br />
-                <span className="text-gradient">Berkarakter & Digital</span>
+              {/* Main Heading */}
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.12] tracking-tight">
+                Membangun Generasi <br />
+                <span className="text-gradient">Cerdas & Berkarakter</span>
               </h1>
 
-              <p className="text-slate-600 text-lg leading-relaxed max-w-2xl">
-                Selamat datang di platform SDN 2 Tegalsari Kepanjen. Menggabungkan Company Profile modern berkonsep Anti-Gravity dengan Sistem Informasi Akademik (SIAKAD) yang aman dan terintegrasi.
+              {/* Subheading */}
+              <p className="text-slate-500 text-lg sm:text-xl leading-relaxed max-w-2xl font-normal">
+                Selamat datang di portal resmi SDN 2 Tegalsari Kepanjen. Menghadirkan lingkungan belajar unggulan dengan sistem informasi akademik (SIAKAD) modern dan terintegrasi.
               </p>
 
+              {/* CTA Buttons */}
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   to="/login"
-                  className="px-8 py-4 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold shadow-lg shadow-emerald-600/30 hover:shadow-emerald-600/40 hover:scale-105 transition-all flex items-center gap-2 text-base"
+                  className="bg-teal-500 hover:bg-teal-600 text-white rounded-full px-8 py-3.5 shadow-[0_8px_20px_rgba(20,184,166,0.3)] hover:shadow-[0_12px_28px_rgba(20,184,166,0.4)] transition-all font-bold text-base flex items-center gap-2 active:scale-95"
                 >
-                  Masuk SIAKAD <ChevronRight className="w-5 h-5" />
+                  Masuk SIAKAD <ArrowRight className="w-5 h-5" />
                 </Link>
 
                 <a
                   href="#visi-misi"
-                  className="px-8 py-4 rounded-full bg-white text-slate-700 font-semibold border border-slate-200 shadow-sm hover:bg-slate-50 hover:border-emerald-300 transition-all text-base"
+                  className="bg-white hover:bg-slate-50 text-slate-700 rounded-full px-8 py-3.5 border border-slate-200 shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:border-teal-300 transition-all font-bold text-base flex items-center gap-2 active:scale-95"
                 >
-                  Lihat Visi & Misi
+                  Jelajahi Profil
                 </a>
               </div>
 
-              {/* Badges */}
-              <div className="pt-8 border-t border-slate-200/80 flex flex-wrap items-center gap-6">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  <span className="text-sm font-semibold text-slate-700">NPSN: 20517647</span>
+              {/* Trust Badges */}
+              <div className="pt-8 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-6">
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-5 h-5 text-teal-500 shrink-0" />
+                  <span className="text-xs sm:text-sm font-semibold text-slate-600">NPSN: 20517647</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  <span className="text-sm font-semibold text-slate-700">Akreditasi A</span>
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-5 h-5 text-teal-500 shrink-0" />
+                  <span className="text-xs sm:text-sm font-semibold text-slate-600">Akreditasi A</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  <span className="text-sm font-semibold text-slate-700">Kurikulum Merdeka</span>
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-5 h-5 text-teal-500 shrink-0" />
+                  <span className="text-xs sm:text-sm font-semibold text-slate-600">Kurikulum Merdeka</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-emerald-600" />
-                  <span className="text-sm font-semibold text-slate-700">Protected DevSecOps</span>
+                <div className="flex items-center gap-2.5">
+                  <ShieldCheck className="w-5 h-5 text-teal-500 shrink-0" />
+                  <span className="text-xs sm:text-sm font-semibold text-slate-600">DevSecOps Shield</span>
                 </div>
               </div>
             </motion.div>
 
-            {/* Anti-Gravity Levitation Cards */}
-            <div className="lg:col-span-5 relative min-h-[440px] flex items-center justify-center">
-              <FloatingCard duration={6} yDistance={-15} glow={true} className="w-full max-w-sm z-20">
+            {/* Right Column: Anti-Gravity Levitating Cards */}
+            <div className="lg:col-span-5 relative min-h-[460px] flex items-center justify-center">
+              
+              {/* Main Center Floating Card */}
+              <FloatingCard duration={5.5} glow={true} className="w-full max-w-sm z-20">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full uppercase">
-                    Portal SIAKAD
+                  <span className="px-3.5 py-1 bg-teal-50 text-teal-700 text-xs font-bold rounded-full border border-teal-100 uppercase tracking-wider">
+                    SIAKAD Digital
                   </span>
-                  <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                  <ShieldCheck className="w-5 h-5 text-teal-500" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Transkrip & Rapor Digital</h3>
-                <p className="text-sm text-slate-600 mb-4">
-                  Memudahkan Siswa dan Wali Murid memantau hasil belajar secara transparan & real-time.
+                <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
+                  Transkrip Nilai Real-time
+                </h3>
+                <p className="text-sm text-slate-500 leading-relaxed mb-6">
+                  Kemudahan bagi Siswa, Wali Murid, dan Tenaga Pendidik memantau evaluasi hasil belajar secara transparan.
                 </p>
-                <div className="bg-slate-50 rounded-xl p-3 flex items-center justify-between text-xs font-semibold text-slate-700 border border-slate-100">
-                  <span>Keamanan Data</span>
-                  <span className="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">Enkripsi JWT</span>
+                <div className="bg-slate-50 rounded-2xl p-3.5 flex items-center justify-between text-xs font-semibold text-slate-700 border border-slate-100">
+                  <span className="text-slate-500">Standar Keamanan</span>
+                  <span className="text-teal-700 bg-teal-100/60 px-2.5 py-1 rounded-lg font-bold">
+                    JWT & Encrypted
+                  </span>
                 </div>
               </FloatingCard>
 
-              {/* Floating Orbit 1 */}
+              {/* Floating Orbit Top-Right */}
               <FloatingCard
-                duration={5}
-                delay={1}
-                yDistance={-12}
-                className="absolute -top-4 -right-2 z-30 w-52 p-4 bg-white/95 shadow-float-lg border-teal-200"
+                duration={4.8}
+                delay={0.8}
+                className="absolute -top-6 -right-2 sm:right-2 z-30 w-52 p-5 bg-white border-teal-100/80"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shadow-md">
-                    <Award className="w-5 h-5" />
+                <div className="flex items-center gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-bold shadow-[0_6px_16px_rgba(245,158,11,0.25)]">
+                    <Award className="w-6 h-6" />
                   </div>
                   <div>
-                    <span className="block text-xs text-slate-500 font-medium">Prestasi</span>
-                    <span className="block text-sm font-bold text-slate-900">Sekolah Penggerak</span>
+                    <span className="block text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Prestasi</span>
+                    <span className="block text-sm font-bold text-slate-900">Sekolah Unggul</span>
                   </div>
                 </div>
               </FloatingCard>
 
-              {/* Floating Orbit 2 */}
+              {/* Floating Orbit Bottom-Left */}
               <FloatingCard
-                duration={7}
-                delay={2}
-                yDistance={-16}
-                className="absolute -bottom-6 -left-2 z-30 w-56 p-4 bg-white/95 shadow-float-lg border-emerald-200"
+                duration={6}
+                delay={1.5}
+                className="absolute -bottom-8 -left-2 sm:left-2 z-30 w-56 p-5 bg-white border-teal-100/80"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-md">
-                    <Users className="w-5 h-5" />
+                <div className="flex items-center gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-teal-500 text-white flex items-center justify-center font-bold shadow-[0_6px_16px_rgba(20,184,166,0.25)]">
+                    <Users className="w-6 h-6" />
                   </div>
                   <div>
-                    <span className="block text-xs text-slate-500 font-medium">Pengajar Terbaik</span>
-                    <span className="block text-sm font-bold text-slate-900">Guru Berlisensi</span>
+                    <span className="block text-[11px] text-slate-400 font-semibold uppercase tracking-wider">Pendidik</span>
+                    <span className="block text-sm font-bold text-slate-900">24+ Guru Berdedikasi</span>
                   </div>
                 </div>
               </FloatingCard>
             </div>
+
           </div>
         </div>
       </section>
 
-      {/* STATISTIK SEKOLAH */}
-      <section className="py-12 bg-white border-y border-slate-200/60">
+      {/* 2. STATS SECTION WITH BREATHING ROOM */}
+      <section className="py-20 bg-white border-y border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="p-4">
-              <span className="block text-4xl font-extrabold text-emerald-600 mb-1">450+</span>
-              <span className="text-sm font-semibold text-slate-600">Siswa Aktif</span>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 text-center">
+            <div className="p-4 space-y-1">
+              <span className="block text-4xl sm:text-5xl font-extrabold text-teal-600 tracking-tight">450+</span>
+              <span className="text-sm font-medium text-slate-500">Siswa Aktif</span>
             </div>
-            <div className="p-4">
-              <span className="block text-4xl font-extrabold text-teal-600 mb-1">24</span>
-              <span className="text-sm font-semibold text-slate-600">Guru & Pengajar</span>
+            <div className="p-4 space-y-1">
+              <span className="block text-4xl sm:text-5xl font-extrabold text-teal-600 tracking-tight">24</span>
+              <span className="text-sm font-medium text-slate-500">Guru & Tenaga Pengajar</span>
             </div>
-            <div className="p-4">
-              <span className="block text-4xl font-extrabold text-amber-500 mb-1">12</span>
-              <span className="text-sm font-semibold text-slate-600">Ruang Kelas Nyaman</span>
+            <div className="p-4 space-y-1">
+              <span className="block text-4xl sm:text-5xl font-extrabold text-amber-500 tracking-tight">12</span>
+              <span className="text-sm font-medium text-slate-500">Ruang Kelas Nyaman</span>
             </div>
-            <div className="p-4">
-              <span className="block text-4xl font-extrabold text-slate-900 mb-1">Akreditasi A</span>
-              <span className="text-sm font-semibold text-slate-600">Predikat Unggul</span>
+            <div className="p-4 space-y-1">
+              <span className="block text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">A</span>
+              <span className="text-sm font-medium text-slate-500">Akreditasi Unggul</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* BAGIAN VISI MISI */}
-      <section id="visi-misi" className="py-24 bg-slate-50 relative">
+      {/* 3. VISI & MISI SECTION WITH SOFT CARDS */}
+      <section id="visi-misi" className="py-24 bg-slate-50/60 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs uppercase tracking-widest font-extrabold text-emerald-700">Profil Sekolah</h2>
-            <p className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-              Visi & Misi SDN 2 Tegalsari Kepanjen
-            </p>
-            <p className="text-slate-600 text-base">
-              Menjadi lembaga pendidikan dasar unggulan yang membentuk karakter berakhlak mulia dan berwawasan digital.
+            <span className="text-xs uppercase tracking-widest font-bold text-teal-700 bg-teal-50 px-4 py-1.5 rounded-full border border-teal-200/50">
+              Profil SDN 2 Tegalsari
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              Visi & Misi Pendidikan
+            </h2>
+            <p className="text-slate-500 text-base leading-relaxed">
+              Komitmen berkelanjutan kami dalam membimbing generasi penerus bangsa yang bertakwa, berakhlak mulia, dan adaptif terhadap teknologi.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <FloatingCard duration={6} delay={0.2} interactiveHover={false} className="bg-white p-8 border-l-4 border-l-emerald-600">
-              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-6 font-bold">
-                <BookOpen className="w-6 h-6" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            
+            {/* Card Visi */}
+            <FloatingCard isStatic={true} className="p-10 border-t-4 border-t-teal-500 flex flex-col justify-between">
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-6 font-bold">
+                  <BookOpen className="w-7 h-7" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Visi Sekolah</h3>
+                <p className="text-slate-600 leading-relaxed italic text-lg font-medium">
+                  "Terwujudnya Peserta Didik yang Bertaqwa, Berkarakter Pancasila, Cerdas, Berprestasi, dan Berwawasan Lingkungan Global."
+                </p>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Visi Utama</h3>
-              <p className="text-slate-600 leading-relaxed italic text-lg">
-                "Terwujudnya Peserta Didik yang Bertaqwa, Berkarakter Pancasila, Cerdas, Berprestasi, dan Berwawasan Lingkungan Global."
-              </p>
+              <div className="mt-8 pt-6 border-t border-slate-100 text-xs text-teal-700 font-semibold flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-teal-500" /> Landasan Utama Kurikulum Merdeka
+              </div>
             </FloatingCard>
 
-            <FloatingCard duration={6} delay={0.4} interactiveHover={false} className="bg-white p-8 border-l-4 border-l-teal-600">
-              <div className="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center mb-6 font-bold">
-                <Building2 className="w-6 h-6" />
+            {/* Card Misi */}
+            <FloatingCard isStatic={true} className="p-10 border-t-4 border-t-emerald-500 flex flex-col justify-between">
+              <div>
+                <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-6 font-bold">
+                  <Building2 className="w-7 h-7" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Misi Utama</h3>
+                <ul className="space-y-4 text-slate-600 text-sm font-medium">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-teal-500 shrink-0 mt-0.5" />
+                    <span>Menyelenggarakan kegiatan belajar berpusat pada siswa dengan fasilitas pembelajaran modern.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-teal-500 shrink-0 mt-0.5" />
+                    <span>Menanamkan nilai budi pekerti, kejujuran, dan ketakwaan kepada Tuhan Yang Maha Esa.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-teal-500 shrink-0 mt-0.5" />
+                    <span>Menerapkan SIAKAD digital untuk transparansi dan kemudahan layanan akademik.</span>
+                  </li>
+                </ul>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Misi Pendidikan</h3>
-              <ul className="space-y-3.5 text-slate-600 text-sm font-medium">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
-                  <span>Menyelenggarakan pembelajaran berkualitas sesuai Kurikulum Merdeka.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
-                  <span>Membentuk sikap religius, disiplin, dan menghormati sesama.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
-                  <span>Mengembangkan SIAKAD digital untuk kemudahan layanan akademik siswa.</span>
-                </li>
-              </ul>
+              <div className="mt-8 pt-6 border-t border-slate-100 text-xs text-emerald-700 font-semibold flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Berorientasi pada Pengembangan Karakter
+              </div>
             </FloatingCard>
+
           </div>
         </div>
       </section>
 
-      {/* BAGIAN BERITA TERBARU (REACT QUERY FETCH) */}
+      {/* 4. BERITA TERBARU SECTION (REACT QUERY WITH HOVER FLOATING CARDS) */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
             <div>
-              <span className="text-xs uppercase tracking-widest font-extrabold text-emerald-700">Informasi & Pengumuman</span>
-              <h2 className="text-3xl font-extrabold text-slate-900 mt-1">Berita Terbaru Sekolah</h2>
+              <span className="text-xs uppercase tracking-widest font-bold text-teal-700 bg-teal-50 px-3.5 py-1 rounded-full border border-teal-200/50">
+                Informasi & Kabar
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-2">
+                Berita Terbaru Sekolah
+              </h2>
             </div>
             <Link
               to="/berita"
-              className="text-emerald-700 hover:text-emerald-800 font-bold flex items-center gap-1 hover:gap-2 transition-all text-sm"
+              className="text-teal-600 hover:text-teal-700 font-bold flex items-center gap-1.5 text-sm transition-all group"
             >
-              Lihat Berita Lainnya <ChevronRight className="w-4 h-4" />
+              Lihat Semua Berita <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
           {loadingPosts ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-80 bg-slate-100 rounded-2xl animate-pulse" />
+                <div key={i} className="h-96 bg-slate-100 rounded-3xl animate-pulse" />
               ))}
             </div>
           ) : posts.length === 0 ? (
-            <div className="bg-slate-50 rounded-2xl p-12 text-center text-slate-500">
-              Belum ada berita dipublikasikan saat ini.
+            <div className="bg-slate-50 rounded-3xl p-16 text-center text-slate-400 text-sm border border-slate-100">
+              Belum ada berita yang dipublikasikan saat ini.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {posts.map((post, idx) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+              {posts.map((post) => (
                 <FloatingCard
                   key={post.id}
-                  duration={5}
-                  delay={idx * 0.2}
-                  className="p-0 overflow-hidden flex flex-col h-full bg-white border-slate-200/80"
+                  isStatic={true}
+                  className="p-0 overflow-hidden flex flex-col h-full bg-white border border-slate-100"
                 >
-                  <div className="h-48 bg-slate-100 overflow-hidden relative">
+                  <div className="h-52 bg-slate-100 overflow-hidden relative">
                     <img
                       src={post.image_url || 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80'}
                       alt={post.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <span className="absolute top-3 left-3 px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-full shadow-sm">
+                    <span className="absolute top-4 left-4 px-3.5 py-1 bg-teal-500 text-white text-xs font-bold rounded-full shadow-sm">
                       Kabar Sekolah
                     </span>
                   </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex items-center gap-4 text-xs text-slate-500 mb-3">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5 text-emerald-600" />
-                        {new Date(post.created_at).toLocaleDateString('id-ID', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                        })}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <User className="w-3.5 h-3.5 text-emerald-600" />
-                        {post.author?.name || 'Admin'}
-                      </span>
+                  <div className="p-7 flex flex-col flex-grow justify-between">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-4 text-xs text-slate-400">
+                        <span className="flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5 text-teal-500" />
+                          {new Date(post.created_at).toLocaleDateString('id-ID', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric',
+                          })}
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <User className="w-3.5 h-3.5 text-teal-500" />
+                          {post.author?.name || 'Admin'}
+                        </span>
+                      </div>
+                      <h3 className="font-bold text-slate-900 text-lg leading-snug line-clamp-2 hover:text-teal-600 transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-slate-500 text-sm line-clamp-3 leading-relaxed">
+                        {post.content}
+                      </p>
                     </div>
-                    <h3 className="font-bold text-slate-900 text-lg mb-2 line-clamp-2 hover:text-emerald-700 transition-colors">
-                      {post.title}
-                    </h3>
-                    <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-grow">
-                      {post.content}
-                    </p>
-                    <Link
-                      to={`/berita/${post.slug}`}
-                      className="inline-flex items-center gap-1 text-sm font-bold text-emerald-600 hover:text-emerald-800"
-                    >
-                      Baca Selengkapnya <ChevronRight className="w-4 h-4" />
-                    </Link>
+
+                    <div className="pt-6 mt-6 border-t border-slate-100">
+                      <Link
+                        to={`/berita/${post.slug}`}
+                        className="inline-flex items-center gap-1.5 text-sm font-bold text-teal-600 hover:text-teal-700"
+                      >
+                        Baca Selengkapnya <ChevronRight className="w-4 h-4" />
+                      </Link>
+                    </div>
                   </div>
                 </FloatingCard>
               ))}
@@ -309,19 +345,24 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* CTA FOOTER BANNER */}
-      <section className="py-20 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white relative overflow-hidden">
+      {/* 5. CTA SECTION */}
+      <section className="py-24 bg-gradient-to-r from-teal-900 via-teal-800 to-emerald-900 text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-extrabold">Akses Layanan Akademik Digital SIAKAD</h2>
-          <p className="text-emerald-100 max-w-2xl mx-auto text-base">
-            Masuk dengan akun Siswa, Guru, atau Admin untuk mengakses transkrip nilai dan pengelolaan data sekolah.
+          <span className="px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold text-teal-200 border border-white/20 uppercase tracking-wider">
+            Sistem Informasi Akademik
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
+            Akses Layanan SIAKAD Digital
+          </h2>
+          <p className="text-teal-100/90 max-w-2xl mx-auto text-base sm:text-lg font-normal leading-relaxed">
+            Masuk dengan akun Siswa, Guru, atau Admin untuk mengakses transkrip nilai dan pengelolaan data sekolah SDN 2 Tegalsari.
           </p>
-          <div>
+          <div className="pt-4">
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-emerald-900 font-bold hover:bg-emerald-50 transition-all hover:scale-105 shadow-xl text-base"
+              className="bg-white hover:bg-teal-50 text-teal-900 rounded-full px-9 py-4 font-bold text-base shadow-xl hover:scale-105 transition-all inline-flex items-center gap-2"
             >
-              Masuk ke SIAKAD <ChevronRight className="w-5 h-5" />
+              Masuk ke SIAKAD <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>

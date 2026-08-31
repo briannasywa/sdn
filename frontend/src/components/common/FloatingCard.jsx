@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
 /**
- * Re-usable Anti-Gravity Floating Card Component
- * Creates smooth weightless levitation effect with soft ambient shadows
+ * Anti-Gravity FloatingCard Component
+ * Implements ultra-smooth levitation and spring-loaded hover reactions
  */
 export const FloatingCard = ({
   children,
@@ -11,41 +11,48 @@ export const FloatingCard = ({
   delay = 0,
   glow = false,
   interactiveHover = true,
-  yDistance = -10,
+  isStatic = false, // If true, disable constant floating loop but keep hover
 }) => {
   return (
     <motion.div
-      animate={{
-        y: [0, yDistance, 0],
-      }}
-      transition={{
-        duration: duration,
-        repeat: Infinity,
-        repeatType: 'reverse',
-        ease: 'easeInOut',
-        delay: delay,
-      }}
+      animate={
+        isStatic
+          ? undefined
+          : {
+              y: [-8, 8, -8],
+            }
+      }
+      transition={
+        isStatic
+          ? undefined
+          : {
+              duration: duration,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: delay,
+            }
+      }
       whileHover={
         interactiveHover
           ? {
-              y: yDistance - 6,
+              y: -10,
               scale: 1.02,
-              transition: { duration: 0.3, ease: 'easeOut' },
+              transition: { type: 'spring', stiffness: 300 },
             }
           : undefined
       }
       className={`
-        relative bg-white/90 backdrop-blur-md rounded-2xl p-6
-        border border-emerald-100/60
-        shadow-float hover:shadow-float-lg
-        transition-all duration-300
-        ${glow ? 'ring-2 ring-emerald-400/30 shadow-glow' : ''}
+        relative bg-white rounded-3xl p-8
+        border border-slate-100
+        shadow-[0_20px_50px_rgba(8,_112,_184,_0.07)]
+        hover:shadow-[0_30px_60px_rgba(20,_184,_166,_0.12)]
+        transition-shadow duration-300
+        ${glow ? 'ring-2 ring-teal-400/20' : ''}
         ${className}
       `}
     >
-      {/* Decorative anti-gravity subtle glow aura */}
       {glow && (
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-2xl blur-lg -z-10 pointer-events-none" />
+        <div className="absolute -inset-1 bg-gradient-to-r from-teal-400/10 via-emerald-400/10 to-teal-400/10 rounded-3xl blur-xl -z-10 pointer-events-none" />
       )}
       {children}
     </motion.div>
