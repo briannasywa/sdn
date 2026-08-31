@@ -1,0 +1,23 @@
+{
+  "name": "sdn2-tegalsari-kepanjen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Company Profile & SIAKAD SDN 2 Tegalsari Kepanjen",
+  "scripts": {
+    "prepare": "husky",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "lint:backend": "npm --prefix backend run lint",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "backend/**/*.js": [
+      "npm --prefix backend run lint"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3"
+  }
+}

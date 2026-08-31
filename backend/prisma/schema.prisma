@@ -1,0 +1,102 @@
+// Prisma Schema for SDN 2 Tegalsari Kepanjen
+// Architecture: Shift-Left Security & Normalized Relational Database
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+model User {
+  id             String          @id @default(uuid())
+  name           String
+  email          String          @unique
+  password_hash  String
+  role           Role            @default(STUDENT)
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+
+  // Relations
+  posts          Post[]
+  studentProfile StudentProfile?
+  teacherProfile TeacherProfile?
+  grades         Grade[]         @relation("StudentGrades")
+
+  @@map("users")
+}
+
+model Post {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  content     String   @db.Text
+  image_url   String?
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  published   Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("posts")
+}
+
+model StudentProfile {
+  id          String      @id @default(uuid())
+  userId      String      @unique
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nisn        String      @unique
+  birth_date  DateTime?
+  address     String?
+  classId     String?
+  classRoom   ClassRoom?  @relation(fields: [classId], references: [id], onDelete: SetNull)
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+
+  @@map("student_profiles")
+}
+
+model TeacherProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nip         String   @unique
+  subject     String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("teacher_profiles")
+}
+
+model ClassRoom {
+  id          String           @id @default(uuid())
+  name        String           @unique // e.g. "1A", "2B"
+  capacity    Int              @default(30)
+  students    StudentProfile[]
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @updatedAt
+
+  @@map("class_rooms")
+}
+
+model Grade {
+  id            String   @id @default(uuid())
+  studentId     String
+  student       User     @relation("StudentGrades", fields: [studentId], references: [id], onDelete: Cascade)
+  subject       String
+  score         Float
+  semester      String   // e.g. "Ganjil" / "Genap"
+  academic_year String   // e.g. "2024/2025"
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@map("grades")
+}
