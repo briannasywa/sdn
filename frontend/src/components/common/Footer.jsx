@@ -57,7 +57,7 @@ export const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Informasi Sekolah</h4>
             <ul className="space-y-2.5 text-sm text-slate-400">
-              <li>NPSN: 20518742</li>
+              <li>NPSN: 20517647</li>
               <li>Akreditasi: A (Unggul)</li>
               <li>Kurikulum: Kurikulum Merdeka</li>
               <li>Jam Pembelajaran: 07.00 - 13.00 WIB</li>

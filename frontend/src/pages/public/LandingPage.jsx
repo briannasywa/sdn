@@ -78,7 +78,11 @@ export const LandingPage = () => {
               </div>
 
               {/* Badges */}
-              <div className="pt-8 border-t border-slate-200/80 flex flex-wrap items-center gap-8">
+              <div className="pt-8 border-t border-slate-200/80 flex flex-wrap items-center gap-6">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  <span className="text-sm font-semibold text-slate-700">NPSN: 20517647</span>
+                </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                   <span className="text-sm font-semibold text-slate-700">Akreditasi A</span>

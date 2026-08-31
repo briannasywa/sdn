@@ -89,7 +89,11 @@ export const HomePage = () => {
               </div>
 
               {/* Trust Badges */}
-              <div className="pt-6 border-t border-slate-200/80 grid grid-cols-3 gap-4 max-w-md">
+              <div className="pt-6 border-t border-slate-200/80 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-lg">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  <span className="text-sm font-medium text-slate-700">NPSN: 20517647</span>
+                </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                   <span className="text-sm font-medium text-slate-700">Akreditasi A</span>
